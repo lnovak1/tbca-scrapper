@@ -14,8 +14,8 @@ ALIMENT_INTAKE=[
     {'Ingredientes' : 'Inhame, s/ casca, assado, s/ óleo, s/ sal, Colocasia esculenta',
     'Qtde (g)': 52
     },
-    {'Ingredientes' : 'Azeite, oliva, cozido',
-    'Qtde (g)': 47
+    {'Ingredientes' : 'Azeite, oliva, cozido, Olea europaea L.',
+    'Qtde (g)': 24+16
     },
     {'Ingredientes' : 'Sal, refinado',
     'Qtde (g)': 7
@@ -23,22 +23,19 @@ ALIMENT_INTAKE=[
     {'Ingredientes' : 'Goma xantana',
     'Qtde (g)': 3
     },
-    {'Ingredientes' : 'Tofu soft organico',
+    {'Ingredientes' : 'Queijo, ricota',
     'Qtde (g)': 93
     },
-    {'Ingredientes' : 'Espinafre, cozido, drenado, s/ óleo, s/ sal, Tetragonia expansa',
+    {'Ingredientes' : 'Tomate, seco, caseiro, c/ sal, (tomate, c/ azeite de oliva, c/ sal), Lycopersicon esculentum',
     'Qtde (g)': 78
     },
-    {'Ingredientes' : 'Cebola, branca, assada, s/ óleo, s/ sal, Allium cepa L.',
-    'Qtde (g)': 23
+    {'Ingredientes' : 'Azeitona, verde, conserva, drenada, Olea europaea L.',
+    'Qtde (g)': 20
     },
     {'Ingredientes' : 'Cenoura, s/ casca, cozida, drenada, s/ óleo, s/ sal, Daucus carota L.',
-    'Qtde (g)': 23
+    'Qtde (g)': 24
     },
     {'Ingredientes' : 'Orégano, seco, Origanum vulgare',
-    'Qtde (g)': 2
-    },
-    {'Ingredientes' : 'Noz moscada, em pó, Myristica fragrans',
     'Qtde (g)': 2
     }]
 
@@ -49,6 +46,8 @@ with open(file_path, "r", encoding='utf-8') as file:
     for line in file:
         removed_multi_space =  " ".join(line.split())
         obj = eval(removed_multi_space)
+        if obj['descricao'].endswith(','):
+            obj['descricao'] = obj['descricao'][:-1]
         nutrient_dict = {}
         for nutri in obj['nutrientes']:
             nutrient_dict[nutri['Componente']] = nutri
@@ -57,7 +56,7 @@ with open(file_path, "r", encoding='utf-8') as file:
 file.close()
 
 def get_values(qnt:str, value_for_hundred:str):
-    if value_for_hundred == 'tr':
+    if value_for_hundred == 'tr' or value_for_hundred =='NA':
         return None
     num_qnt =  float(str(qnt).replace(',','.'))
     num_value_for_hundred =  float(str(value_for_hundred).replace(',','.'))
